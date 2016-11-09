@@ -7,10 +7,18 @@
 
 #endif //SNAKE_SNAKE_H
 
-#include <vector>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <Gl/glut.h>
+#define GLUT_DISABLE_ATEXIT_HACK
+
+#pragma comment(lib, "glut32.lib")
+
+
+#include <deque>
+#include <gl/gl.h>
+#include <gl/glu.h>
+#include <GL/glut.h>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 
 const int M = 15;
 const int N = 10;
@@ -30,10 +38,8 @@ struct point {
 };
 
 class Fruit{
-    private:
-    int x, y;
-
     public:
+    int x, y;
     Fruit();
     void draw_fruit();
     void reload();
@@ -42,19 +48,18 @@ class Fruit{
 
 class Snake{
     private:
+    point np;
     short dead;
     Fruit* f;
-    vector<point> coordinates;
-    point np;
+    deque<point> coordinates;
 
     public:
     Snake();
     point next_point(int);
     void move();
     void draw();
-    void eat();
+    void eat(Fruit *f);
     void die();
 };
 
 void press_key(int, int, int);
-void display();
